@@ -6,7 +6,7 @@ class App {
         this.expressApp = express();
         this.configs = {
             get port() {
-                return process.env.PORT || 3000;
+                return process.env.PORT || 4000;
             }
         }
     }

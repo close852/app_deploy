@@ -1,41 +1,67 @@
-const Posts = [
+const Users = [
     {
-        id: 1,
-        title: 'post 1',
-        contents: 'post 1 contents'
+        userid: '1',
+        username: 'jiwoo1'
     },
     {
-        id: 2,
-        title: 'post 2',
-        contents: 'post 2 contents'
+        userid: '2',
+        username: 'jiwoo2'
     },
     {
-        id: 3,
-        title: 'post 3',
-        contents: 'post 3 contents'
+        userid: '3',
+        username: 'jiwoo3'
     },
     {
-        id: 4,
-        title: 'post 4',
-        contents: 'post 4 contents'
+        userid: '4',
+        username: 'jiwoo4'
     },
     {
-        id: 5,
-        title: 'post 5',
-        contents: 'post 5 contents'
+        userid: '5',
+        username: 'jiwoo5'
     }
 ];
-const Writers = [
+const Apps = [
     {
-        id: 1,
-        name: 'Writer 1',
-        posts: [1, 3]
+        appid: '1',
+        username: 'cjw',
     },
     {
-        id: 2,
-        name: 'Writer 2',
-        posts: [2, 4, 5]
+        appid: '2',
+        username: 'cjw2',
+    },
+    {
+        appid: '3',
+        username: 'cjw3',
     }
 ];
-module.exports.Posts = Posts;
-module.exports.Writers = Writers;
+const AppLines = [
+    {
+        applineid: '11',
+        appid: '1',
+        username: 'cjw'
+    },
+    {
+        applineid: '24',
+        appid: '2',
+        username: 'cjw24'
+    },
+    {
+        applineid: '23',
+        appid: '2',
+        username: 'cjw23'
+    },
+    {
+        applineid: '22',
+        appid: '2',
+        username: 'cjw22'
+    },
+    {
+        applineid: '33',
+        appid: '3',
+        username: 'cjw3'
+    }
+]
+
+module.exports.Users = Users;
+module.exports.AppLines = AppLines;
+module.exports.Apps = Apps;

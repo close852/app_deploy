@@ -1,61 +1,73 @@
-const { Writers, Posts } = require('./data')
+const { Users, Apps, AppLines } = require('./data')
 const { gql } = require('apollo-server-express');
 const typeDefs = gql`
-    type Post{
-        id: ID!,
-        title: String,
-        contents: String
-    }
-    type Writer{
-        id: ID!
-        name: String,
-        posts: [Post]
-    }
-    type Query{
-        Posts: [Post],
-        Post(id: ID): Post,
-        Writers: [Writer],
-        Writer(id: ID):Writer
+    type User{
+        userid: ID!
+        username: String
     }
     type App{
-        appid : ID!,
-        title : String,
-        contents : String
+        appid: ID!
+        username: String
+        applines: [AppLine]
     }
-    
-    type Mutation{
-        writePost(writeId: ID, title: String, contents: String ):Post
+    type AppLine{
+        applineid: ID!
+        appid: String
+        username: String
     }
-`;
+    type Query{
+        Users: [User]
+        User(userid:ID): User
+        App(appid:ID): App
+        Apps: [App]
+        AppLine(appid:String):[AppLine]
+        AppLineByOne(applineid:ID):AppLine
+        AppLines:[AppLine]
+    }
+    `;
+
+// type Mutation{
+//     writePost(writeId: ID, title: String, contents: String ):Post
+// }
 const resolvers = {
     Query: {
-        Posts: () => Posts,
-        Post: (_, { id }) => Posts.find(o => String(o.id) === id),
-        Writers: () => Writers,
-        Writer: (_, { id }) => Writers.find(o => String(o.id) === id)
+        Users: () => Users,
+        User: (_, { userid }) => Users.find(o => String(o.userid) === userid),
+        App: (_, { appid }) => Apps.find(app => String(app.appid) === appid),
+        Apps: () => Apps, //.find(app => String(app.appid) === appid)
+        AppLine: (_, { appid }) => AppLines.filter(app => String(app.appid) === appid),
+        AppLineByOne: (_, { applineid }) => AppLines.find(line => line.applineid === applineid),
+        AppLines: () => AppLines,
+
     },
-    Writer: {
-        id: w => w.id,
-        name: w => w.name,
-        posts: w => Posts.filter(post => w.posts.includes(post.id))
+    User: {//id(type User) : p(Users의 obj)
+        userid: p => p.userid,
+        username: p => p.username,
     },
-    Post: {
-        id: p => p.id,
-        title: p => p.title
+    App: {
+        appid: a => a.appid,
+        username: a => a.username,
+        applines: a => AppLines.filter(line => line.appid === a.appid)
+        // applines: a => AppLines.filter(line => a.applines.appid === line.appid)
     },
-    Mutation: {
-        writePost: (_, { writeId, title, contents }) => {
-            const id = Posts.length + 1;
-            const post = {
-                id,
-                title,
-                contents,
-            };
-            Posts.push(post);
-            Writers.find(w => String(w.id) === writeId).posts.push(id);
-            return post;
-        }
-    },
+    AppLine: {
+        applineid: line => line.applineid,
+        appid: line => line.appid,
+        username: line => line.username
+    }
+    // Mutation: {
+    //     writePost: (_, { writeId, title, contents }) => {
+    //         const id = Posts.length + 1;
+    //         const post = {
+    //             id,
+    //             title,
+    //             contents,
+    //         };
+    //         Posts.push(post);
+    //         Writers.find(w => String(w.id) === writeId).posts.push(id);
+    //         return post;
+    //     }
+    // },
 };
 module.exports = {
     typeDefs: typeDefs,
