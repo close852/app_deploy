@@ -62,6 +62,8 @@ const AppLines = [
     }
 ]
 
-module.exports.Users = Users;
-module.exports.AppLines = AppLines;
-module.exports.Apps = Apps;
+module.exports = {
+    Users: Users,
+    AppLines: AppLines,
+    Apps: Apps
+}

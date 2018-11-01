@@ -1,12 +1,13 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const Routes = require('./routes');
+const { port } = require('./config/system-config');
 class App {
     constructor() {
         this.expressApp = express();
         this.configs = {
             get port() {
-                return process.env.PORT || 4000;
+                return process.env.PORT || port;
             }
         }
     }
