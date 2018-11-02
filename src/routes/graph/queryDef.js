@@ -1,4 +1,4 @@
-const { Users, Apps, AppLines } = require('./data')
+const { Users, Apps, AppLines, Bacons } = require('./data')
 const { gql } = require('apollo-server-express');
 const typeDefs = gql`
     type User{
@@ -23,6 +23,13 @@ const typeDefs = gql`
         AppLine(appid:String):[AppLine]
         AppLineByOne(applineid:ID):AppLine
         AppLines:[AppLine]
+        Bacon(id:ID):Bacon
+        Bacons:[Bacon]
+    }
+    type Bacon{
+        id: ID!
+        type: String
+        price: String
     }
     `;
 
@@ -38,7 +45,8 @@ const resolvers = {
         AppLine: (_, { appid }) => AppLines.filter(app => String(app.appid) === appid),
         AppLineByOne: (_, { applineid }) => AppLines.find(line => line.applineid === applineid),
         AppLines: () => AppLines,
-
+        Bacon: (_, { id }) => Bacons.getByID(id),
+        Bacons: () => Bacons.findAllBacons('')
     },
     User: {//id(type User) : p(Users의 obj)
         userid: p => p.userid,
@@ -54,7 +62,12 @@ const resolvers = {
         applineid: line => line.applineid,
         appid: line => line.appid,
         username: line => line.username
-    }
+    },
+    Bacon: {
+        id: b => b.id,
+        type: b => b.type,
+        price: b => b.price
+    },
     // Mutation: {
     //     writePost: (_, { writeId, title, contents }) => {
     //         const id = Posts.length + 1;

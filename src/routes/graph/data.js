@@ -1,3 +1,4 @@
+const Bacon = require('../../model/bacon/bacon');
 const Users = [
     {
         userid: '1',
@@ -62,8 +63,10 @@ const AppLines = [
     }
 ]
 
+
 module.exports = {
     Users: Users,
     AppLines: AppLines,
-    Apps: Apps
+    Apps: Apps,
+    Bacons: Bacon
 }
